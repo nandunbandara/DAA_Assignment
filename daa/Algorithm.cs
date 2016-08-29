@@ -30,7 +30,7 @@ namespace daa
             {
                 int key = arr[j];
                 int i = j - 1;
-                while(i>0 && arr[i] > key)
+                while(i>=0 && arr[i] > key)
                 {
                     arr[i + 1] = arr[i];
                     i--;
