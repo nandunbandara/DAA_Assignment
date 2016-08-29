@@ -9,14 +9,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using MetroFramework.Controls;
-
+using System.Threading;
 
 namespace daa
 {
     public partial class Main : MetroForm
     {
-        
 
+        private MetroTile tile1;
+        private MetroTile tile2;
+        private Algorithm algo;
         public Main()
         {
             InitializeComponent();
@@ -105,6 +107,12 @@ namespace daa
                     dgvAlgo.Rows.Add("                              i <- i - 1");
                     dgvAlgo.Rows.Add("                      A[i+1] <- key");
                     break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
             }
         }
 
@@ -112,8 +120,18 @@ namespace daa
 
         private void btnSort_Click(object sender, EventArgs e)
         {
-            //create array
-            int[] arr = new int[] { Convert.ToInt32(txt0.Text),
+            
+            if (String.IsNullOrEmpty(txt0.Text) || String.IsNullOrEmpty(txt1.Text) ||
+               String.IsNullOrEmpty(txt2.Text) || String.IsNullOrEmpty(txt3.Text) ||
+               String.IsNullOrEmpty(txt4.Text) || String.IsNullOrEmpty(txt5.Text) ||
+               String.IsNullOrEmpty(txt6.Text) || String.IsNullOrEmpty(txt7.Text) ||
+               String.IsNullOrEmpty(txt8.Text) || String.IsNullOrEmpty(txt9.Text))
+                MessageBox.Show("Enter all 10 values or click on 'Randomize' to generate random values");
+            else
+            {
+                btnRandom.Enabled = false;
+                // create array
+                int[] arr = new int[] { Convert.ToInt32(txt0.Text),
                                     Convert.ToInt32(txt1.Text),
                                     Convert.ToInt32(txt2.Text),
                                     Convert.ToInt32(txt3.Text),
@@ -124,10 +142,14 @@ namespace daa
                                     Convert.ToInt32(txt8.Text),
                                     Convert.ToInt32(txt9.Text),
                                    };
-            Algorithm algo = new Algorithm();
-            algo.Grid = dgvAlgo;
-            algo.InsertionSort(arr);
+                this.algo = new Algorithm(lbl0, lbl1, lbl2, lbl3, lbl4, lbl5, lbl6, lbl7, lbl8, lbl9);
+                algo.Grid = dgvAlgo;
+                algo.InsertionSort(arr);
+
+            }
+
         }
         
+
     }
 }

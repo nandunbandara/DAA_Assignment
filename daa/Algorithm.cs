@@ -1,6 +1,7 @@
 ﻿using MetroFramework.Controls;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,26 +24,89 @@ namespace daa
         private int coordX1;
         private int coordX2;
 
+        private MetroTile t0;
+        private MetroTile t1;
+        private MetroTile t2;
+        private MetroTile t3;
+        private MetroTile t4;
+        private MetroTile t5;
+        private MetroTile t6;
+        private MetroTile t7;
+        private MetroTile t8;
+        private MetroTile t9;
+
         
+        private int[] arr;
+        public Algorithm()
+        {
+
+        }
+        public Algorithm(MetroTile t0, MetroTile t1, MetroTile t2, MetroTile t3, MetroTile t4,
+                        MetroTile t5, MetroTile t6, MetroTile t7, MetroTile t8, MetroTile t9)
+        {
+            this.t0 = t0;
+            this.t1 = t1;
+            this.t2 = t2;
+            this.t3 = t3;
+            this.t4 = t4;
+            this.t5 = t5;
+            this.t6 = t6;
+            this.t7 = t7;
+            this.t8 = t8;
+            this.t9 = t9;
+
+            this.tile1 = t0;
+            this.tile2 = t1;
+        }
         public void InsertionSort(int[] arr)
         {
-            for(int j = 1; j < arr.Length; j++)
+            this.arr = arr;
+            //set timer
+            
+            for (int j = 1; j < arr.Length; j++)
             {
                 int key = arr[j];
                 int i = j - 1;
-                while(i>=0 && arr[i] > key)
+                while (i >= 0 && arr[i] > key)
                 {
                     arr[i + 1] = arr[i];
+                    exchange(1);               
                     i--;
+                    //System.Threading.Thread.Sleep(200);
                 }
                 arr[i + 1] = key;
             }
 
-            for (int i = 0; i < arr.Length-1; i++)
+            for (int i = 0; i < arr.Length - 1; i++)
                 Console.WriteLine(arr[i]);
         }
-        private void exchange()
+
+
+        public void exchange(int i)
         {
+            switch (i)
+            {
+                case 0:
+                    tile1 = t0;
+                    tile2 = t1;
+                    break;
+                case 1:
+                    tile1 = t1;
+                    tile2 = t2;
+                    break;
+                case 2:
+                    tile1 = t2;
+                    tile2 = t3;
+                    break;
+                case 3:
+                    tile1 = t3;
+                    tile2 = t4;
+                    break;
+                case 4:
+                    tile1 = t4;
+                    tile2 = t5;
+                    break;
+            }
             this.coordX1 = tile1.Location.X;
             this.coordX2 = tile2.Location.X;
 
@@ -128,5 +192,6 @@ namespace daa
             if (tile2.Location.Y < 281) tile2.SetBounds(tile2.Location.X, tile2.Location.Y + 1, tile2.Width, tile2.Height);
             else timerDownTile2.Stop();
         }
+        
     }
 }
