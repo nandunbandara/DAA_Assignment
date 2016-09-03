@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("daa")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Algorithm Simulator")]
+[assembly: AssemblyDescription("2nd Year 2nd Semester - DAA Assignment")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("daa")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCompany("A.J.M.N.T.Bandara (IT15111166)")]
+[assembly: AssemblyProduct("Algorithm Simulator")]
+[assembly: AssemblyCopyright("Copyright ©  2016 - A.J.M.N.T.Bandara")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
