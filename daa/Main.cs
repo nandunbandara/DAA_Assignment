@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using MetroFramework.Controls;
-
+using MetroFramework;
 
 namespace daa
 {
@@ -33,7 +33,6 @@ namespace daa
         public Main()
         {
             InitializeComponent();
-            //lbl2.Style = MetroFramework.MetroColorStyle.Red;
             delay = 2000;
             this.arr = new MetroTile[] { lbl0, lbl1, lbl2, lbl3, lbl4, lbl5, lbl6, lbl7, lbl8, lbl9 };
         }
@@ -165,24 +164,9 @@ namespace daa
                String.IsNullOrEmpty(txt4.Text) || String.IsNullOrEmpty(txt5.Text) ||
                String.IsNullOrEmpty(txt6.Text) || String.IsNullOrEmpty(txt7.Text) ||
                String.IsNullOrEmpty(txt8.Text) || String.IsNullOrEmpty(txt9.Text))
-                MessageBox.Show("Enter all 10 values or click on 'Randomize' to generate random values");
+                MetroMessageBox.Show(this, "Enter all 10 values or click on 'Randomize' to generate random values");
             else
-            {
-                //ctrlEnabled(false);
-                //txt0.Enabled = false;
-                // create array
-                /*int[] arr = new int[] { Convert.ToInt32(txt0.Text),
-                                    Convert.ToInt32(txt1.Text),
-                                    Convert.ToInt32(txt2.Text),
-                                    Convert.ToInt32(txt3.Text),
-                                    Convert.ToInt32(txt4.Text),
-                                    Convert.ToInt32(txt5.Text),
-                                    Convert.ToInt32(txt6.Text),
-                                    Convert.ToInt32(txt7.Text),
-                                    Convert.ToInt32(txt8.Text),
-                                    Convert.ToInt32(txt9.Text),
-                                   };*/
-
+            { 
                 this.algo = new Algorithm(lbl0, lbl1, lbl2, lbl3, lbl4, lbl5, lbl6, lbl7, lbl8, lbl9);
                 algo.Grid = dgvAlgo;
                 switch (cmbAlgorithm.SelectedIndex)
@@ -252,11 +236,11 @@ namespace daa
         {
             btnReset.Enabled = false;
             btnSort.Enabled = false;
+            btnRandom.Enabled = false;
             for (int j = 1; j < this.arr.Length; j++)
             {
                 setJ(j+1);   
                 dgvAlgo.Rows[0].Selected = true;
-                //
                 await Task.Delay(delay);
                 dgvAlgo.Rows[0].Selected = false;
                 dgvAlgo.Rows[1].Selected = true;
@@ -275,7 +259,6 @@ namespace daa
                 await Task.Delay(delay);
                 dgvAlgo.Rows[2].Selected = false;
                 dgvAlgo.Rows[3].Selected = true;
-                //lblDescription.Text 
                 if (i < 0) lblDescription.Text = "i = -1 Hence i>=0 condition is false";
                 else if (Convert.ToInt32(arr[i].Text) < Convert.ToInt32(lblKeyBtn.Text))
                     lblDescription.Text = "Value at index "+ i +" is less than that at index "+(i+1)+".";
@@ -318,8 +301,6 @@ namespace daa
             }
             lbl9.Style = MetroFramework.MetroColorStyle.Lime;
             lbl9.Refresh();
-            for (int i = 0; i < arr.Length - 1; i++)
-                Console.WriteLine(arr[i].Text);
             prg.Value = 100;
             await Task.Delay(1000);
             prg.Value = 0;
@@ -329,60 +310,61 @@ namespace daa
 
         private async void BubbleSort()
         {
+            btnRandom.Enabled = false;
+            btnSort.Enabled = false;
             btnReset.Enabled = false;
-            int length = arr.Length;
-            for(int j = 0; j < length; j++)
+            for(int j = 0; j < arr.Length; j++)
             {
-                setJ(j+1);
+                setJ(j + 1);
                 dgvAlgo.Rows[0].Selected = true;
                 await Task.Delay(delay);
                 dgvAlgo.Rows[0].Selected = false;
 
                 int i;
-                for(i=1;i<length; i++)
+                for(i=0;i<arr.Length-1; i++)
                 {
-                    
-                    arr[i-1].Style = MetroFramework.MetroColorStyle.Red;
-                    arr[i-1].Refresh();
-                    
                     arr[i].Style = MetroFramework.MetroColorStyle.Red;
-                    arr[i].Refresh();
-                    
-                    setI(i);
+                    arr[i].Refresh();   
+                    arr[i+1].Style = MetroFramework.MetroColorStyle.Red;
+                    arr[i+1].Refresh();
+                    setI(i+1);
                     dgvAlgo.Rows[2].Selected = true;
                     await Task.Delay(delay);
                     dgvAlgo.Rows[2].Selected = false;
-                    arr[i - 1].Style = MetroFramework.MetroColorStyle.Silver;
-                    arr[i - 1].Refresh();
                     arr[i].Style = MetroFramework.MetroColorStyle.Silver;
                     arr[i].Refresh();
-                    if (Convert.ToInt32(arr[i].Text) < Convert.ToInt32(arr[i - 1].Text)) { 
-                        arr[i - 1].Style = MetroFramework.MetroColorStyle.Blue;
+                    arr[i+1].Style = MetroFramework.MetroColorStyle.Silver;
+                    arr[i+1].Refresh();
+                    if (Convert.ToInt32(arr[i+1].Text) < Convert.ToInt32(arr[i].Text)) {
+                        lblDescriptionBubble.Text = arr[i+1].Text + " index(" + i + ")" + " is less than " + arr[i].Text + " index(" + i + 1 + ")";
                         arr[i].Style = MetroFramework.MetroColorStyle.Blue;
-                        arr[i - 1].Refresh();
+                        arr[i+1].Style = MetroFramework.MetroColorStyle.Blue;
                         arr[i].Refresh();
+                        arr[i+1].Refresh();
                         dgvAlgo.Rows[5].Selected = true;
                         await Task.Delay(delay);
-                        exchange(arr[i-1], arr[i]);
+                        exchange(arr[i], arr[i+1]);
+                        lblDescriptionBubble.Text = "Swap index(" + (i+1) + ") and index(" + (i) + ")";
                         await Task.Delay(4000);
+                        lblDescriptionBubble.Text = null;
                         dgvAlgo.Rows[5].Selected = false;
-                        arr[i - 1].Style = MetroFramework.MetroColorStyle.Silver;
                         arr[i].Style = MetroFramework.MetroColorStyle.Silver;
-                        arr[i - 1].Refresh();
+                        arr[i+1].Style = MetroFramework.MetroColorStyle.Silver;
                         arr[i].Refresh();
-                        MetroTile temp = arr[i];
-                        arr[i] = arr[i - 1];
-                        arr[i - 1] = temp;
+                        arr[i+1].Refresh();
+                        MetroTile temp = arr[i+1];
+                        arr[i+1] = arr[i];
+                        arr[i] = temp;
                     }
                 }
-                arr[i-1].Style = MetroFramework.MetroColorStyle.Lime;
-                arr[i - 1].Refresh();
-                prg.Value = (j+1) * 10;
-                length--;
+                for (int k = i; k >=(i - j); k--)
+                {
+                    arr[k].Style = MetroFramework.MetroColorStyle.Lime;
+                    arr[k].Refresh();
+                }
+                prg.Value = (j + 1) * 10;
             }
             await Task.Delay(100);
-            for (int i = 0; i < arr.Length - 1; i++)
-                Console.WriteLine(arr[i].Text);
             prg.Value = 100;
             await Task.Delay(1000);
             prg.Value = 0;
@@ -538,17 +520,26 @@ namespace daa
 
         private void btnReset_Click(object sender, EventArgs e)
         {
-            ctrlEnabled(true);
-            lbl0.Style = MetroFramework.MetroColorStyle.Lime;
-            lbl1.Style = MetroFramework.MetroColorStyle.Lime;
-            lbl2.Style = MetroFramework.MetroColorStyle.Lime;
-            lbl3.Style = MetroFramework.MetroColorStyle.Lime;
-            lbl4.Style = MetroFramework.MetroColorStyle.Lime;
-            lbl5.Style = MetroFramework.MetroColorStyle.Lime;
-            lbl6.Style = MetroFramework.MetroColorStyle.Lime;
-            lbl7.Style = MetroFramework.MetroColorStyle.Lime;
-            lbl8.Style = MetroFramework.MetroColorStyle.Lime;
-            lbl9.Style = MetroFramework.MetroColorStyle.Lime;
+            txt0.Text = null;
+            txt1.Text = null;
+            txt2.Text = null;
+            txt3.Text = null;
+            txt4.Text = null;
+            txt5.Text = null;
+            txt6.Text = null;
+            txt7.Text = null;
+            txt8.Text = null;
+            txt9.Text = null;
+            lbl0.Style = MetroFramework.MetroColorStyle.Silver;
+            lbl1.Style = MetroFramework.MetroColorStyle.Silver;
+            lbl2.Style = MetroFramework.MetroColorStyle.Silver;
+            lbl3.Style = MetroFramework.MetroColorStyle.Silver;
+            lbl4.Style = MetroFramework.MetroColorStyle.Silver;
+            lbl5.Style = MetroFramework.MetroColorStyle.Silver;
+            lbl6.Style = MetroFramework.MetroColorStyle.Silver;
+            lbl7.Style = MetroFramework.MetroColorStyle.Silver;
+            lbl8.Style = MetroFramework.MetroColorStyle.Silver;
+            lbl9.Style = MetroFramework.MetroColorStyle.Silver;
             lbl0.Refresh();
             lbl1.Refresh();
             lbl2.Refresh();
@@ -559,6 +550,8 @@ namespace daa
             lbl7.Refresh();
             lbl8.Refresh();
             lbl9.Refresh();
+            btnSort.Enabled = true;
+            btnRandom.Enabled = true;
         }
     }
 }
