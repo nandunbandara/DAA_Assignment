@@ -336,7 +336,7 @@ namespace daa
                     arr[i+1].Style = MetroFramework.MetroColorStyle.Silver;
                     arr[i+1].Refresh();
                     if (Convert.ToInt32(arr[i+1].Text) < Convert.ToInt32(arr[i].Text)) {
-                        lblDescriptionBubble.Text = arr[i+1].Text + " index(" + i + ")" + " is less than " + arr[i].Text + " index(" + i + 1 + ")";
+                        lblDescriptionBubble.Text = arr[i+1].Text + " index(" + i + ")" + " is less than " + arr[i].Text + " index(" + (i + 1) + ")";
                         arr[i].Style = MetroFramework.MetroColorStyle.Blue;
                         arr[i+1].Style = MetroFramework.MetroColorStyle.Blue;
                         arr[i].Refresh();
